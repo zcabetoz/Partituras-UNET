@@ -1,0 +1,32 @@
+@import 'bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import 'admin-lte/dist/css/adminlte.min.css';
+@import "angular/angular-csp.css";
+
+body {
+    background-color: lightgray;
+}
+
+.form-control-feedback {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    pointer-events: none;
+}
+
+.has-feedback .form-control {
+    padding-right: 43px;
+}
+
+.box-login {
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem 2rem;
+}

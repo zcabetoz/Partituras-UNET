@@ -1,0 +1,9 @@
+# config/packages/nucleos_user.yaml
+nucleos_user:
+  db_driver: mongodb # other valid values is 'mongodb'
+  firewall_name: main
+  user_class: App\Document\User
+  from_email: "dann"
+  use_listener: false
+  loggedin:
+    route: 'homepage' # Redirect route after login

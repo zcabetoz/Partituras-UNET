@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <title>{% block title %}Login! {% endblock %}</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('build/favicon.png') }}"/>
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="bg-light">
+{% trans_default_domain 'NucleosUserBundle' %}
+{% block nucleos_user_content %}
+    <div class="container d-flex justify-content-center" style="padding-top: 20vh">
+        <div class="card shadow box-login">
+            <div class="text-center mb-5">
+                <img src="{{ asset('build/logo.png') }}" width="100" alt="logo" class="img-fluid">
+            </div>
+            <form method="post">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+                <div class="position-relative has-feedback mb-3">
+                    <input type="text" class="form-control" placeholder="Usuario" autofocus id="username"
+                           aria-label="" name="_username" required="required"/>
+                    <span class="form-control-feedback"><i class="fa fa-user"></i></span>
+                </div>
+
+                <div class="position-relative has-feedback mb-4">
+                    <input type="password" id="password" name="_password" required="required" class="form-control"
+                           aria-label="" placeholder="Contraseña" autocomplete="new-password"/>
+                    <span id="icon-password" class="form-control-feedback"><i class="fa fa-lock"></i></span>
+                </div>
+
+                <button type="submit" class="btn btn-secondary w-100 mb-2">Ingresar</button>
+
+                <div class="text-center">
+                    <a href="#" class="btn btn-link p-0 text-muted">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+            {% for type, flashes in app.flashes %}
+                {% for flash in flashes %}
+                    <div class="alert alert-danger mt-4">
+                        {{ flash }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% if error %}
+                <div class="alert alert-danger m-4">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock nucleos_user_content %}
+
+<script>
+    // const passwordField = $('#password');
+    // const icon = $('#icon-password');
+    // $(function () {
+    //     passwordField.on('input', function () {
+    //         if ($(this).val().length > 0) {
+    //             const isPassword = passwordField.attr('type') === 'password';
+    //             passwordField.attr('type', isPassword ? 'password' : 'text');
+    //             icon.removeClass('glyphicon glyphicon-lock').addClass('fa')
+    //             icon.toggleClass('fa-eye', !isPassword);
+    //             icon.toggleClass('fa-eye-slash', isPassword);
+    //             icon.css('pointer-events', 'auto');
+    //             icon.css('cursor', 'pointer');
+    //
+    //         } else {
+    //             icon.removeClass('fa fa-eye-slash fa fa-eye').addClass('glyphicon glyphicon-lock');
+    //             icon.css('pointer-events', 'none');
+    //             icon.css('cursor', 'none');
+    //         }
+    //     });
+    //
+    //     icon.on('click', function () {
+    //         const isPassword = passwordField.attr('type') === 'password';
+    //         passwordField.attr('type', isPassword ? 'text' : 'password');
+    //         icon.toggleClass('fa-eye', isPassword);
+    //         icon.toggleClass('fa-eye-slash', !isPassword);
+    //         passwordField.focus()[0].setSelectionRange(passwordField.val().length, passwordField.val().length);
+    //     });
+    // });
+</script>
+</body>
+</html>

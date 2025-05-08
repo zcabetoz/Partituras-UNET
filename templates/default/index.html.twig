@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block menu_principal %}
+    {{ include('menu/menu.principal.html.twig') }}
+{% endblock %}
+
+{% block title %}Dashboard :: UNET{% endblock %}
+
+{% block content_header %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" ng-controller="UsuarioController as ctrl" ng-cloak="">
+        <h1>{{ '{{ ctrl.res }}' }}</h1>
+    </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Partituras :: UNET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="title" content="AdminLTE v4 | Dashboard"/>
+    <meta name="author" content="ColorlibHQ"/>
+    <meta name="description"
+          content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS."/>
+    <meta name="keywords"
+          content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('build/favicon.png') }}"/>
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+
+<div class="app-wrapper" ng-app="MyApp" ng-cloak="">
+    {{ include('default/main.header.html.twig') }}
+
+    <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <div class="sidebar-brand">
+            <a href="{{ path('dashboard') }}" class="brand-link">
+                <span class="brand-text fw-light">Coro / UNET</span>
+            </a>
+        </div>
+
+        <div class="sidebar-wrapper">
+            <nav class="mt-2">
+                {% block menu_principal %}{% endblock %}
+            </nav>
+        </div>
+    </aside>
+
+    <main class="app-main">
+        <div class="app-content-header">
+            {% block content_header %}{% endblock %}
+        </div>
+
+        <div class="app-content">
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="float-end d-none d-sm-inline">Version 1.0a</div>
+        <strong>
+            Copyright &copy; 2025&nbsp;
+        </strong>
+        Todos los derechos reservados.
+    </footer>
+</div>
+</body>
+</html>
+
