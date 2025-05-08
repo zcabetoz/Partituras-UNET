@@ -4,6 +4,5 @@ nucleos_user:
   firewall_name: main
   user_class: App\Document\User
   from_email: "dann"
-  use_listener: false
   loggedin:
     route: 'homepage' # Redirect route after login

@@ -14,7 +14,6 @@ class User extends BaseUser
     #[ODM\Id(strategy: "auto")]
     protected string $id;
 
-    #[ODM\Field(type: "string")]
     #[Assert\NotBlank(message: "La contraseña es obligatoria")]
     #[Assert\Regex(
         pattern: "/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@~`!#$%^&*=_+:;'<>?,.|])[A-Za-z\d@~`!#$%^&*=_+:;'<>?,.|]{1,}$/",
@@ -50,7 +49,7 @@ class User extends BaseUser
         return $this->id;
     }
 
-    public function setPlainPassword($password): void
+    public function setPlainPassword(?string $password): void
     {
         $this->plainPassword = $password;
     }
