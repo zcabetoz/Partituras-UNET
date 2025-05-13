@@ -1,0 +1,34 @@
+<div class="modal" tabindex="-1" id="mdl-delete-role">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="box text-decoration-none m-0 border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmaci&oacute;n</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-title fs-5 pb-3">
+                        ¿Est&aacute; seguro de eliminar el Rol?
+                    </p>
+                    <table class="table table-bordered table-striped table-hover table-sm m-0">
+                        <tr>
+                            <th>Rol</th>
+                            <td ng-bind="ctrl.role"></td>
+                        </tr>
+                        <tr>
+                            <th>Descripci&oacute;n</th>
+                            <td ng-bind="ctrl.description"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.deleteRole()">Eliminar</button>
+                </div>
+                <div class="overlay" ng-if="ctrl.isLoadingModal">
+                    <i class="fa fa-spin fa-spinner"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

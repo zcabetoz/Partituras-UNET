@@ -1,6 +1,6 @@
 <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
-        <a href="{{ path('dashboard') }}" class="nav-link">
+        <a href="{{ path('dashboard') }}" class="nav-link" ng-class="ctrl.isMenuOpen('dashboard')">
             <i class="nav-icon bi bi-speedometer"></i>
             <p>Dashboard</p>
         </a>
@@ -11,35 +11,6 @@
             <i class="nav-icon bi bi-palette"></i>
             <p>Autores</p>
         </a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-box-seam-fill"></i>
-            <p>
-                Configuraci&oacute;n
-                <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
-        </a>
-        <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Usuarios</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Roles</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Grupos</p>
-                </a>
-            </li>
-        </ul>
     </li>
 
     <li class="nav-header">OBRAS</li>
@@ -95,23 +66,34 @@
         </a>
     </li>
 
-    <li class="nav-header">ORGANIZACI&Oacute;N</li>
-    <li class="nav-item">
+    <li class="nav-item" id="item-user-settings">
         <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-circle text-danger"></i>
-            <p class="text">Important</p>
+            <i class="nav-icon fa fa-fw fa-lock"></i>
+            <p>
+                Seguridad
+                <i class="nav-arrow bi bi-chevron-right"></i>
+            </p>
         </a>
+        <ul class="nav nav-treeview" id="ul-users-settings">
+            <li class="nav-item">
+                <a href="{{ path('security_list_roles') }}" class="nav-link" ng-class="ctrl.isMenuOpen('security_list_roles')">
+                    <i class="nav-icon fa fa-fw fa-person-walking-dashed-line-arrow-right "></i>
+                    <p>Roles</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fa fa-fw fa-users-viewfinder"></i>
+                    <p>Grupos</p>
+                </a>
+            </li>
+        </ul>
     </li>
+
     <li class="nav-item">
         <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-circle text-warning"></i>
-            <p>Warning</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-circle text-info"></i>
-            <p>Informational</p>
+            <i class="nav-icon fa fa-fw fa-users"></i>
+            <p>Usuarios</p>
         </a>
     </li>
 </ul>

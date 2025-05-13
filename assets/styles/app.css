@@ -3,6 +3,9 @@
 @import "~@fortawesome/fontawesome-free/css/all.css";
 @import 'admin-lte/dist/css/adminlte.min.css';
 @import "angular/angular-csp.css";
+@import './paginator.css';
+@import './style.css';
+@import 'angularjs-toaster/toaster.css';
 
 body {
     background-color: lightgray;
@@ -29,4 +32,37 @@ body {
     width: 100%;
     max-width: 400px;
     padding: 2.5rem 2rem;
+}
+
+ul.nav.nav-treeview {
+    padding-left: 20px;
+}
+
+.toast-top-custom {
+    top: 62px;
+    right: 15px;
+}
+
+#toast-container > div {
+    animation: zoomInFromBack 0.9s ease-out forwards;
+    transform-origin: center;
+    opacity: 1 !important;
+    will-change: transform, opacity, filter;
+    display: block;
+}
+
+@keyframes zoomInFromBack {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+        filter: blur(2px);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(0);
+        filter: blur(0);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

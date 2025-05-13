@@ -1,0 +1,29 @@
+<div class="modal" tabindex="-1" id="mdl-register-role">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            {{ form_start(form, {'name' : 'formRegisterRole'} ) }}
+            <div class="box text-decoration-none m-0 border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ '{{ ctrl.titleMdlRegisterRole }}' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="role" class="form-label">Role</label>
+                    {{ form_row(form.role) }}
+
+                    <label for="description" class="form-label">Descripci&oacute;n</label>
+                    {{ form_row(form.description) }}
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
+                </div>
+                <div class="overlay" ng-if="ctrl.isLoadingModal">
+                    <i class="fa fa-spin fa-spinner"></i>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

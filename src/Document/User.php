@@ -8,13 +8,13 @@ use Nucleos\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ODM\Document]
-#[MongoDBUnique(fields: ["username"])]
+#[MongoDBUnique(fields: ['username'])]
 class User extends BaseUser
 {
-    #[ODM\Id(strategy: "auto")]
+    #[ODM\Id(strategy: 'auto')]
     protected string $id;
 
-    #[Assert\NotBlank(message: "La contraseña es obligatoria")]
+    #[Assert\NotBlank(message: 'La contraseña es obligatoria')]
     #[Assert\Regex(
         pattern: "/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@~`!#$%^&*=_+:;'<>?,.|])[A-Za-z\d@~`!#$%^&*=_+:;'<>?,.|]{1,}$/",
         message: "La contraseña debe contener números, al menos un carácter especial, letras mayúsculas y minúsculas"
@@ -27,16 +27,16 @@ class User extends BaseUser
     )]
     protected ?string $plainPassword;
 
-    #[ODM\Field(type: "string")]
+    #[ODM\Field(type: 'string')]
     protected string $nombre;
 
-    #[ODM\Field(type: "string")]
+    #[ODM\Field(type: 'string')]
     protected string $shema_version;
 
-    #[ODM\Field(type: "string")]
+    #[ODM\Field(type: 'string')]
     protected ?string $email;
 
-    #[ODM\Field(type: "int")]
+    #[ODM\Field(type: 'int')]
     protected int $loginFail = 0;
 
     public function __construct()

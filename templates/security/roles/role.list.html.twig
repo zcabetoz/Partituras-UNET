@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block menu_principal %}
+    {{ include('menu/menu.principal.html.twig') }}
+{% endblock %}
+
+{% block content_header %}{% endblock %}
+
+{% block body %}
+    <div class="box" ng-controller="SecurityController as ctrl">
+        <toaster-container
+                toaster-options="{ 'position-class': 'toast-top-custom', 'newest-on-top':false}">
+        </toaster-container>
+
+        <div class="box-header with-border">
+            Roles
+            <div class="box-tools">
+                <button class="btn btn-sm btn-primary" ng-click="ctrl.openMdlRegisterRole()">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body table-responsive">
+            <table id="tbl-roles" class="table table-hover table-striped table-sm">
+                <thead>
+                <tr>
+                    <th class="visually-hidden"></th>
+                    <th>Role</th>
+                    <th>Descripci&oacute;n</th>
+                    <th class="text-end"><i class="fa fa-gears"></i></th>
+                </thead>
+                <tr ng-repeat="role in ctrl.roles" class="align-middle">
+                    <td class="visually-hidden"></td>
+                    <td>{{ '{{ role.role }}' }}</td>
+                    <td>{{ '{{ role.description }}' }}</td>
+                    <td class="text-end">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-default" ng-click="ctrl.openMdlRegisterRole(role)"><i class="bi bi-pencil-square"></i></button>
+
+                            <button class="btn btn-sm btn-default text-danger" ng-click="ctrl.openMdlDeleteRole(role)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="box-footer">
+                <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
+                    <ul class="p-0 m-0">  {{ '{{ ctrl.totalItems }}' }} Registro(s)</ul>
+                    <ul uib-pagination total-items="ctrl.totalItems" ng-model="ctrl.currentPage"
+                        max-size="5" class="pagination-sm m-0" boundary-links="true" items-per-page="ctrl.numItems"
+                        ng-change="ctrl.pageChanged()" first-text="Primero" previous-text="<" next-text=">"
+                        last-text="Último">
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div ng-if="ctrl.totalItems==0" class="box-body">
+            No se encontraron registros
+        </div>
+        <div class="overlay" ng-if="ctrl.isLoading">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+
+        {% include 'security/roles/mdl.delete.role.html.twig' %}
+        {% include 'security/roles/mdl.register.role.html.twig' %}
+
+    </div>
+{% endblock %}

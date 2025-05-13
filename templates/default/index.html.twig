@@ -22,6 +22,8 @@
 
 {% block body %}
     <div class="container-fluid" ng-controller="UsuarioController as ctrl" ng-cloak="">
-        <h1>{{ '{{ ctrl.res }}' }}</h1>
+        <h1>{{ '{{ ctrl.data.name }}' }}</h1>
+        <h1>{{ '{{ ctrl.data.age }}' }}</h1>
+        <h1>{{ '{{ ctrl.data.email }}' }}</h1>
     </div>
 {% endblock %}

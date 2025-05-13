@@ -5,18 +5,13 @@ export default function UserController($http) {
 
     const url = Routing.generate('test_connect');
 
-    $ctrl.data = {
+    let data = {
         name: 'Carlos Serrano',
         age: 30,
         email: 'cabeto@gmail.com'
     }
 
-    $http.post(url, {param: $ctrl.data}).then(function (response) {
-        console.log(response.data)
-        $ctrl.res = response.data.response;
+    $http.post(url, data).then(function (response) {
+        $ctrl.data = response.data;
     });
-
-
-    $ctrl.name = 'Carlos Serrano';
-    console.log($ctrl.name);
 }
