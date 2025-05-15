@@ -12,7 +12,7 @@ class UserGroupRepository extends DocumentRepository
      */
     public function findGroupByRole(string $role)
     {
-        $qb= $this->createQueryBuilder();
+        $qb = $this->createQueryBuilder();
 
         $qb->field('roles')->equals($role);
 

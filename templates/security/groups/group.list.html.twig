@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groups :: Partituras{% endblock %}
+{% block menu_principal %}
+    {{ include('menu/menu.principal.html.twig') }}
+{% endblock %}
+
+{% block content_header %}{% endblock %}
+
+{% block body %}
+    <div ng-controller="GroupController as ctrl">
+        <toaster-container
+                toaster-options="{ 'position-class': 'toast-top-custom', 'newest-on-top':false}">
+        </toaster-container>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="box">
+                    <div class="box-header with-border">
+                        Grupos
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                    ng-click="ctrl.openMdlRegisterGroup()">
+                                <i class="fa fa-plus text-green"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-hover table-condensed table-responsive table-sm align-middle"
+                               ng-if="ctrl.groups.length > 0">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th class="text-end"><i class="fa fa-fw fa-cogs"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="group in ctrl.groups"
+                                ng-class="{'table-success': group === ctrl.groupSelected}"
+                                ng-click="ctrl.groupSelected = group"
+                            >
+                                <td style="cursor: pointer" ng-click="ctrl.getRolesGroup(group)">
+                                    <span>{{ '{{ group.nombre.toUpperCase() }}' }}</span>
+                                </td>
+                                <td ng-class="{'td-disabled': group !== ctrl.groupSelected}">
+                                    <div class="btn-group float-end">
+                                        <button class="btn btn-default btn-sm" ng-click="ctrl.openMdlAddRoles(group)">
+                                            Agregar Rol
+                                        </button>
+
+                                        <button class="btn btn-default btn-sm"
+                                                ng-click="ctrl.openMdlRegisterGroup(group)">
+                                            <i class="fa fa-fw fa-edit"></i>
+                                        </button>
+
+                                        <button class="btn btn-default btn-sm"
+                                                ng-click="ctrl.openMdlDeleteGroup(group)">
+                                            <i class="bi bi-trash3 text-danger"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="alert alert-info" ng-if="ctrl.groups.length === 0">
+                            No hay grupos registrados
+                        </div>
+                    </div>
+                    <div class="overlay" ng-show="ctrl.isLoadingGroups">
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="box">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <strong>Roles asignados</strong>
+                    </div>
+                    <div class="box-body">
+                        <div class="roles-container-group"
+                             ng-if="!ctrl.loadingRolesFromGroup && ctrl.groups.length > 0">
+                            <div class="d-flex" ng-repeat="role in ctrl.rolesFromGroup">
+                                <div class="role-checkbox">
+                                    <input type="checkbox" ng-click="ctrl.checkRoleGroup(role.id, true)"
+                                           style="cursor: pointer;" checked id="check['{{ '{{ role.id }}' }}']"
+                                    >
+                                </div>
+
+                                <label for="check['{{ '{{ role.id }}' }}']" title="{{ '{{ role.description }}' }}"
+                                       style="margin-bottom: 0; cursor: pointer">
+                                    {{ '{{ role.role }}' }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info"
+                             ng-if="!ctrl.loadingRolesFromGroup && ctrl.rolesFromGroup.length === 0">
+                            No hay roles asignados a este grupo
+                        </div>
+
+                        <div class="alert alert-info" ng-if="!ctrl.isLoadingGroups && ctrl.groups.length === 0">
+                            Debe registrar un grupo para poder asignar roles
+                        </div>
+
+                        <div class="overlay" ng-if="ctrl.loadingRolesFromGroup">
+                            <i class="fa fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'security/groups/mdl.register.group.html.twig' %}
+        {% include 'security/groups/mdl.delete.group.html.twig' %}
+        {% include 'security/groups/mdl.add.roles.to.group.html.twig' %}
+    </div>
+{% endblock %}

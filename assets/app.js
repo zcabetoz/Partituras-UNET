@@ -6,12 +6,14 @@ import 'bootstrap';
 import "angular-ui-bootstrap";
 import './services/partituras-services';
 
-import UsuarioController from './controllers/user-controller';
-import MenuController from "./controllers/menu-controller";
-import SecurityController from "./controllers/security-controller";
+import UsuarioController from './controllers/user/user-controller';
+import MenuController from "./controllers/menu/menu-controller";
+import RoleController from "./controllers/security/role-controller";
+import GroupController from "./controllers/security/group-controller";
 
 angular.module('MyApp', ['ui.bootstrap', 'partituras.services'])
     .controller('UsuarioController', UsuarioController)
     .controller('MenuController', MenuController)
-    .controller('SecurityController', SecurityController)
+    .controller('RoleController', RoleController)
+    .controller('GroupController', GroupController)
 

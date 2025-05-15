@@ -7,6 +7,10 @@
 @import './style.css';
 @import 'angularjs-toaster/toaster.css';
 
+:root {
+    --bs-body-font-size: 14px
+}
+
 body {
     background-color: lightgray;
 }
@@ -43,11 +47,28 @@ ul.nav.nav-treeview {
     right: 15px;
 }
 
-#toast-container > div {
-    animation: zoomInFromBack 0.9s ease-out forwards;
-    transform-origin: center;
+.toast.ng-leave-active,
+.toast.ng-leave {
+    opacity: 0;
+    transition: none !important;
+}
+
+.toast {
     opacity: 1 !important;
-    will-change: transform, opacity, filter;
+}
+
+.toast.ng-enter {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+.toast.ng-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s ease-out;
+}
+
+.toast:not(.show) {
     display: block;
 }
 

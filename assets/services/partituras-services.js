@@ -11,7 +11,7 @@ angular.module('partituras.services', ['ngAnimate', 'toaster'])
                 type: type,
                 body: mensaje,
                 timeout: time,
-                showCloseButton: true
+                showCloseButton: true,
             });
         }
 
@@ -20,11 +20,21 @@ angular.module('partituras.services', ['ngAnimate', 'toaster'])
             $timeout(function () {
                 input.focus();
                 input[0].setSelectionRange(input.val().length, input.val().length);
-            }, 100);
+            }, 50);
         }
 
-        $ctrl.validField = function (fieldName) {
-            let field = $scope.formRegisterRole[fieldName];
-            return field.$invalid && field.$dirty || $ctrl.campoError === fieldName && field.$invalid
+        $ctrl.hasError = function (form, fieldName, campoError) {
+            let field = form[fieldName];
+            return field.$invalid && field.$dirty || campoError === fieldName && field.$invalid
         };
     })
+    .run(function ($timeout) {
+        $(document).on('hide.bs.modal', function (e) {
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+        });
+    });
+
+
+

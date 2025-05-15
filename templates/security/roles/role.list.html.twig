@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Roles :: Partituras{% endblock %}
 {% block menu_principal %}
     {{ include('menu/menu.principal.html.twig') }}
 {% endblock %}
@@ -7,7 +8,7 @@
 {% block content_header %}{% endblock %}
 
 {% block body %}
-    <div class="box" ng-controller="SecurityController as ctrl">
+    <div class="box" ng-controller="RoleController as ctrl">
         <toaster-container
                 toaster-options="{ 'position-class': 'toast-top-custom', 'newest-on-top':false}">
         </toaster-container>
@@ -15,7 +16,7 @@
         <div class="box-header with-border">
             Roles
             <div class="box-tools">
-                <button class="btn btn-sm btn-primary" ng-click="ctrl.openMdlRegisterRole()">
+                <button class="btn btn-sm btn-secondary" ng-click="ctrl.openMdlRegisterRole()">
                     <i class="fa fa-plus"></i>
                 </button>
             </div>
@@ -24,21 +25,21 @@
             <table id="tbl-roles" class="table table-hover table-striped table-sm">
                 <thead>
                 <tr>
-                    <th class="visually-hidden"></th>
                     <th>Role</th>
                     <th>Descripci&oacute;n</th>
                     <th class="text-end"><i class="fa fa-gears"></i></th>
                 </thead>
                 <tr ng-repeat="role in ctrl.roles" class="align-middle">
-                    <td class="visually-hidden"></td>
                     <td>{{ '{{ role.role }}' }}</td>
                     <td>{{ '{{ role.description }}' }}</td>
                     <td class="text-end">
                         <div class="btn-group">
-                            <button class="btn btn-sm btn-default" ng-click="ctrl.openMdlRegisterRole(role)"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-sm btn-default" ng-click="ctrl.openMdlRegisterRole(role)">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
 
                             <button class="btn btn-sm btn-default text-danger" ng-click="ctrl.openMdlDeleteRole(role)">
-                                <i class="bi bi-trash"></i>
+                                <i class="bi bi-trash3"></i>
                             </button>
                         </div>
                     </td>
@@ -66,6 +67,5 @@
 
         {% include 'security/roles/mdl.delete.role.html.twig' %}
         {% include 'security/roles/mdl.register.role.html.twig' %}
-
     </div>
 {% endblock %}

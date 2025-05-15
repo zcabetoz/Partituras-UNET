@@ -1,6 +1,6 @@
 import Routing from 'fos-router';
 
-export default function SecurityController($scope, $http, PartiturasServices, $timeout) {
+export default function RoleController($scope, $http, PartiturasServices) {
     let $ctrl = this;
 
     $ctrl.options = {};
@@ -46,7 +46,7 @@ export default function SecurityController($scope, $http, PartiturasServices, $t
         $ctrl.role = role.role;
         $ctrl.description = role.description;
         $ctrl.idRoleDelete = role.id;
-        angular.element($('#mdl-delete-role').modal('show'));
+        angular.element('#mdl-delete-role').modal('show');
     }
 
     $ctrl.deleteRole = function () {
@@ -55,31 +55,29 @@ export default function SecurityController($scope, $http, PartiturasServices, $t
 
         $http.delete(url, {data: {id: $ctrl.idRoleDelete}}).then(function (response) {
             $ctrl.isLoadingModal = false;
-            angular.element($('#mdl-delete-role').modal('hide'));
+            angular.element('#mdl-delete-role').modal('hide');
             PartiturasServices.toasterMessageService('Rol eliminado correctamente', 'success');
             $ctrl.getRoles();
         });
     }
 
     $ctrl.openMdlRegisterRole = function (role = null) {
-        $ctrl.rol = role;
-        $ctrl.role = role ? role.role : '';
-        $ctrl.description = role ? role.description : '';
+        const mdlRegisterRole = angular.element('#mdl-register-role');
 
+        $ctrl.rol = role;
+        $ctrl.role = role?.role ?? '';
+        $ctrl.description = role?.description ?? '';
+        $ctrl.descriptionError = $ctrl.roleError = false;
 
         $ctrl.titleMdlRegisterRole = role ? 'Editar Rol' : 'Registrar Rol';
-        angular.element($('#mdl-register-role').modal('show'));
 
-        $timeout(function () {
-            if ($scope.formRegisterRole) {
-                $scope.formRegisterRole.$setPristine();
-                $scope.formRegisterRole.$setUntouched();
-            }
+        mdlRegisterRole.modal('show');
 
-            $ctrl.descriptionError =  $ctrl.roleError = false;
-
+        mdlRegisterRole.on('shown.bs.modal', function () {
+            $scope.formRegisterRole.$setPristine();
+            $scope.formRegisterRole.$setUntouched();
             PartiturasServices.elementFocus('user_role_role');
-        }, 100);
+        });
     }
 
     $ctrl.registerRole = function ($event) {
@@ -98,16 +96,15 @@ export default function SecurityController($scope, $http, PartiturasServices, $t
             $http.post(url, data).then(function (response) {
                 response = response.data;
                 $ctrl.isLoadingModal = false;
-                if(response.status === 'error'){
+                if (response.status === 'error') {
                     PartiturasServices.toasterMessageService(response.message, response.status);
                     $ctrl.roleError = true;
                     PartiturasServices.elementFocus('user_role_role');
-                }else{
-                    angular.element($('#mdl-register-role').modal('hide'));
+                } else {
+                    angular.element('#mdl-register-role').modal('hide');
                     PartiturasServices.toasterMessageService(response.message, response.status);
                     $ctrl.getRoles();
                 }
-
             });
         } else {
             const requiredErrors = $scope.formRegisterRole.$error['required'];
@@ -122,12 +119,7 @@ export default function SecurityController($scope, $http, PartiturasServices, $t
     }
 
     $ctrl.validateFields = function () {
-        $ctrl.roleError = $ctrl.hasError('user_role[role]');
-        $ctrl.descriptionError = $ctrl.hasError('user_role[description]');
-    };
-
-    $ctrl.hasError = function (fieldName) {
-        let field = $scope.formRegisterRole[fieldName];
-        return field.$invalid && field.$dirty || $ctrl.campoError === fieldName && field.$invalid;
+        $ctrl.roleError = PartiturasServices.hasError($scope.formRegisterRole, 'user_role[role]', $ctrl.campoError);
+        $ctrl.descriptionError = PartiturasServices.hasError($scope.formRegisterRole, 'user_role[description]', $ctrl.campoError);
     };
 }

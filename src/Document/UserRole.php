@@ -41,4 +41,13 @@ class UserRole
     {
         $this->description = $description;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'role' => $this->getRole(),
+            'description' => $this->getDescription(),
+        ];
+    }
 }

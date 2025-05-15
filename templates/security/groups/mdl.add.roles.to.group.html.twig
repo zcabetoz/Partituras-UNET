@@ -1,0 +1,46 @@
+<div class="modal fade" id="mdl-add-roles" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="box text-decoration-none m-0 border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Role al Grupo - {{ '{{ ctrl.groupSelected.nombre }}' }}</h5>
+
+                    <button type="button" class="btn-close"
+                            ng-click="ctrl.getRolesGroup(ctrl.groupSelected, true)">
+                    </button>
+                </div>
+                <div class="modal-body" style="max-height: 80vh;overflow-y: auto">
+                    <div class="box-body">
+                        <div class="roles-container-group"
+                             ng-if="!ctrl.loadingRolesNotGroup">
+                            <div class="d-flex" ng-repeat="role in ctrl.rolesNotGroup">
+                                <div class="role-checkbox">
+                                    <input type="checkbox" ng-click="ctrl.checkRoleGroup(role.id)"
+                                           style="cursor: pointer;" id="check['{{ '{{ role.id }}' }}']"
+                                    >
+                                </div>
+
+                                <label for="check['{{ '{{ role.id }}' }}']" title="{{ '{{ role.description }}' }}"
+                                       style="margin-bottom: 0; cursor: pointer">
+                                    {{ '{{ role.role }}' }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="overlay" ng-if="ctrl.loadingRolesNotGroup">
+                            <i class="fa fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm float-end"
+                            ng-click="ctrl.getRolesGroup(ctrl.groupSelected, true)">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

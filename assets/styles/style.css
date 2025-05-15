@@ -320,3 +320,76 @@
     font-weight: 400;
     font-size: 12px
 }
+
+.btn-default {
+    background-color: #f4f4f4;
+    color: #444;
+    border-color: #ddd;
+}
+
+.td-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+/* Estilos para los roles */
+
+.roles-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 10px;
+}
+
+.roles-container-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 10px;
+}
+
+
+.role-checkbox {
+    margin-right: 10px;
+}
+
+@media (max-width: 1800px) {
+    .role-label {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1650px) {
+    .roles-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .roles-container-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 1430px) {
+    .roles-container-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .roles-container-group {
+        display: grid;
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+@media (max-width: 1250px) {
+    .roles-container {
+        display: grid;
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+}

@@ -33,4 +33,18 @@ class UserRoleRepository extends DocumentRepository
 
         return $response;
     }
+
+    /**
+     * @throws MongoDBException
+     */
+    public function getRolesFromGroup($roles, $exclude): iterable
+    {
+        $qb = $this->createQueryBuilder();
+
+        $field = $qb->field('role');
+
+        $exclude === 'false' ? $field->in($roles) : $field->notIn($roles);
+
+        return $qb->getQuery()->execute();
+    }
 }

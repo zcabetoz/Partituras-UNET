@@ -1,4 +1,4 @@
-<div class="modal fade" id="mdl-delete-role" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="mdl-delete-group" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -9,22 +9,18 @@
                 </div>
                 <div class="modal-body">
                     <p class="modal-title fs-5 pb-3">
-                        ¿Est&aacute; seguro de eliminar el rol?
+                        ¿Est&aacute; seguro de eliminar el grupo?
                     </p>
                     <table class="table table-bordered table-striped table-hover table-sm m-0">
                         <tr>
-                            <th>Rol</th>
-                            <td ng-bind="ctrl.role"></td>
-                        </tr>
-                        <tr>
-                            <th>Descripci&oacute;n</th>
-                            <td ng-bind="ctrl.description"></td>
+                            <th>Grupo</th>
+                            <td ng-bind="ctrl.nameGroupDelete"></td>
                         </tr>
                     </table>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.deleteRole()">Eliminar</button>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.deleteGroup()">Eliminar</button>
                 </div>
                 <div class="overlay" ng-if="ctrl.isLoadingModal">
                     <i class="fa fa-spin fa-spinner"></i>

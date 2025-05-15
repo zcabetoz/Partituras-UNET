@@ -11,4 +11,17 @@ class UserGroup extends BaseGroup
 {
     #[MongoDB\Id(strategy: 'auto')]
     protected string $id;
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'nombre' => $this->getName(),
+        ];
+    }
 }
