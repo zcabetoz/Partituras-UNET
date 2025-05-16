@@ -25,7 +25,7 @@ body {
     height: 34px;
     line-height: 34px;
     text-align: center;
-    pointer-events: none;
+    cursor: pointer;
 }
 
 .has-feedback .form-control {
@@ -87,3 +87,8 @@ ul.nav.nav-treeview {
         transform: scale(1);
     }
 }
+
+.form-control.is-invalid {
+    padding-left: 12px !important;
+}
+

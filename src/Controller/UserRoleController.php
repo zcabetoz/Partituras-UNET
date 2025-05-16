@@ -57,6 +57,7 @@ class UserRoleController extends AbstractController
 
         $response = new JsonResponse($output);
         $response->setEncodingOptions(JSON_PRETTY_PRINT);
+
         return $response;
     }
 

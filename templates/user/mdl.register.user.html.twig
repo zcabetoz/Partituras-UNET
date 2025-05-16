@@ -1,0 +1,60 @@
+<div class="modal fade" id="mdl-register-user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            {{ form_start(form, {'name' : 'formRegisterUser', 'attr' : {'novalidate' : 'novalidate'}} ) }}
+            <div class="box text-decoration-none m-0 border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-5 sm">
+                                {{ include('user/user.requeriments.html.twig') }}
+                            </div>
+
+                            <div class="col-lg-7 pt-4 pt-lg-2">
+                                <label for="user_name" class="form-label">Nombre</label>
+                                {{ form_row(form.name) }}
+
+                                <label for="user_email" class="form-label">Email</label>
+                                {{ form_row(form.email) }}
+
+                                <label for="username" class="form-label">Nombre de usuario</label>
+                                {{ form_row(form.username) }}
+
+                                <div class="position-relative has-feedback mb-3">
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    {{ form_row(form.password) }}
+                                    <i class="fa form-control-feedback" style="top: 32px; right: 5px"
+                                       ng-class="{'fa-eye': ctrl.showPassword['password'], 'fa-eye-slash': !ctrl.showPassword['password']}"
+                                       ng-click="ctrl.togglePassword('password')"
+                                    ></i>
+                                </div>
+
+                                <div class="position-relative has-feedback mb-3">
+                                    <label for="password_confirm" class="form-label">Confirmar Contraseña</label>
+                                    {{ form_row(form.password_confirm) }}
+                                    <i class="fa form-control-feedback " style="top: 32px; right: 5px"
+                                       ng-class="{'fa-eye': ctrl.showPassword['passwordConfirm'], 'fa-eye-slash': !ctrl.showPassword['passwordConfirm']}"
+                                       ng-click="ctrl.togglePassword('passwordConfirm')"
+                                    ></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
+                </div>
+                <div class="overlay" ng-if="ctrl.isLoadingModal">
+                    <i class="fa fa-spin fa-spinner"></i>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

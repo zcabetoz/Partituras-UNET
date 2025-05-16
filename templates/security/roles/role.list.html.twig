@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Roles :: Partituras{% endblock %}
+{% block title %}Roles :: {{ parent() }}{% endblock %}
 {% block menu_principal %}
     {{ include('menu/menu.principal.html.twig') }}
 {% endblock %}
@@ -16,7 +16,7 @@
         <div class="box-header with-border">
             Roles
             <div class="box-tools">
-                <button class="btn btn-sm btn-secondary" ng-click="ctrl.openMdlRegisterRole()">
+                <button class="btn btn-sm btn-dark" ng-click="ctrl.openMdlRegisterRole()">
                     <i class="fa fa-plus"></i>
                 </button>
             </div>

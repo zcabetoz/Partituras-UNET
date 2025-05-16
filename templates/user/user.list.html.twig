@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User :: {{ parent() }}{% endblock %}
+
+{% block menu_principal %}
+    {{ include('menu/menu.principal.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <div class="row" ng-controller="UsuarioController as ctrl">
+        <div class="col-md-3">
+            <div class="box">
+                <div class="box-header with-border">
+                    Filtros
+                </div>
+
+                <div class="box-body">
+                    <input id="search" class="form-control" placeholder="Buscar..." aria-label=""
+                           ng-model="ctrl.search"
+                           ng-keydown="$event.keyCode === 13 && ctrl.getUsers()"
+                    >
+                </div>
+
+                <div class="box-footer">
+                    <button type="button" class="btn btn-dark btn-sm float-end" ng-click="ctrl.getUsers()">
+                        Filtrar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="box">
+                <div class="box-header with-border">
+                    Usuarios
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-sm btn-dark" ng-click="ctrl.openMdlRegisterUser()">
+                            <i class="fa fa-user-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                    <table id="tbl-roles" class="table table-hover table-striped table-sm w-100">
+                        <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Nombre</th>
+                            <th class="text-end"><i class="fa fa-gears"></i></th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in ctrl.users" class="align-middle">
+                            <td>{{ '{{ user.username }}' }}</td>
+                            <td>{{ '{{ user.email }}' }}</td>
+                            <td>{{ '{{ user.name }}' }}</td>
+                            <td class="text-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-default">
+                                        Asignar Grupo
+                                    </button>
+
+                                    <button class="btn btn-sm btn-default" title="Detalle del usuario">
+                                        <i class="bi bi-info-square"></i>
+                                    </button>
+
+                                    <button class="btn btn-sm btn-default text-danger"
+                                            ng-click="ctrl.openMdlDeleteRole(role)">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="box-footer">
+                        <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
+                            <ul class="p-0 m-0">  {{ '{{ ctrl.totalItems }}' }} Registro(s)</ul>
+                            <ul uib-pagination total-items="ctrl.totalItems" ng-model="ctrl.currentPage"
+                                max-size="5" class="pagination-sm m-0" boundary-links="true"
+                                items-per-page="ctrl.numItems"
+                                ng-change="ctrl.pageChanged()" first-text="Primero" previous-text="<" next-text=">"
+                                last-text="Último">
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div ng-if="ctrl.totalItems==0" class="box-body">
+                    No se encontraron registros
+                </div>
+                <div class="overlay" ng-if="ctrl.isLoading">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </div>
+            </div>
+        </div>
+
+        {% include 'user/mdl.register.user.html.twig' %}
+    </div>
+{% endblock %}

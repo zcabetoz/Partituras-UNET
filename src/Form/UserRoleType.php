@@ -45,9 +45,4 @@ class UserRoleType extends AbstractType
             ]
         ]);
     }
-
-    public function getName(): string
-    {
-        return 'role';
-    }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Partituras{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('build/favicon.png') }}"/>
 
@@ -26,7 +26,7 @@
             </a>
         </div>
 
-        <div class="sidebar-wrapper" ng-controller="MenuController as ctrl" ng-cloak="">
+        <div class="sidebar-wrapper" ng-controller="MenuController as ctrl">
             <nav class="mt-2">
                 {% block menu_principal %}{% endblock %}
             </nav>
@@ -56,4 +56,3 @@
 </div>
 </body>
 </html>
-

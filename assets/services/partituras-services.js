@@ -23,9 +23,9 @@ angular.module('partituras.services', ['ngAnimate', 'toaster'])
             }, 50);
         }
 
-        $ctrl.hasError = function (form, fieldName, campoError) {
+        $ctrl.hasError = function (form, fieldName, campoError, extraCondition = false) {
             let field = form[fieldName];
-            return field.$invalid && field.$dirty || campoError === fieldName && field.$invalid
+            return field.$invalid && field.$dirty || campoError === fieldName && field.$invalid || extraCondition;
         };
     })
     .run(function ($timeout) {

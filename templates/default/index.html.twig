@@ -4,7 +4,7 @@
     {{ include('menu/menu.principal.html.twig') }}
 {% endblock %}
 
-{% block title %}Dashboard :: Partituras{% endblock %}
+{% block title %}Dashboard :: {{ parent() }}{% endblock %}
 
 {% block content_header %}
     <div class="container-fluid">
@@ -20,10 +20,4 @@
     </div>
 {% endblock %}
 
-{% block body %}
-    <div class="container-fluid" ng-controller="UsuarioController as ctrl" ng-cloak="">
-        <h1>{{ '{{ ctrl.data.name }}' }}</h1>
-        <h1>{{ '{{ ctrl.data.age }}' }}</h1>
-        <h1>{{ '{{ ctrl.data.email }}' }}</h1>
-    </div>
-{% endblock %}
+{% block body %}{% endblock %}

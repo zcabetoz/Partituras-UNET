@@ -2,12 +2,13 @@
 
 namespace App\Document;
 
+use App\Repository\UserRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Nucleos\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ODM\Document]
+#[ODM\Document(repositoryClass: UserRepository::class)]
 #[MongoDBUnique(fields: ['username'])]
 class User extends BaseUser
 {
@@ -28,7 +29,7 @@ class User extends BaseUser
     protected ?string $plainPassword;
 
     #[ODM\Field(type: 'string')]
-    protected string $nombre;
+    protected ?string $nombre=null;
 
     #[ODM\Field(type: 'string')]
     protected string $shema_version;

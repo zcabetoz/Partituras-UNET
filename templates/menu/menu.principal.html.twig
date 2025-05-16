@@ -1,7 +1,7 @@
 <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
         <a href="{{ path('dashboard') }}" class="nav-link" ng-class="ctrl.isMenuOpen('dashboard')">
-            <i class="nav-icon bi bi-speedometer"></i>
+            <i class="nav-icon fa fa-house"></i>
             <p>Dashboard</p>
         </a>
     </li>
@@ -13,7 +13,6 @@
         </a>
     </li>
 
-    <li class="nav-header">OBRAS</li>
     <li class="nav-item">
         <a href="#" class="nav-link">
             <i class="nav-icon bi bi-box-arrow-in-right"></i>
@@ -52,7 +51,6 @@
         </a>
     </li>
 
-    <li class="nav-header">BIT&Aacute;CORA</li>
     <li class="nav-item">
         <a href="#" class="nav-link">
             <i class="nav-icon bi bi-person-arms-up"></i>
@@ -91,7 +89,7 @@
     </li>
 
     <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="{{ path('user_list') }}" class="nav-link" ng-class="ctrl.isMenuOpen('user_list')">
             <i class="nav-icon fa fa-fw fa-users"></i>
             <p>Usuarios</p>
         </a>

@@ -64,9 +64,11 @@ export default function RoleController($scope, $http, PartiturasServices) {
     $ctrl.openMdlRegisterRole = function (role = null) {
         const mdlRegisterRole = angular.element('#mdl-register-role');
 
+        $('form[name="formRegisterRole"]').trigger('reset');
+
         $ctrl.rol = role;
-        $ctrl.role = role?.role ?? '';
-        $ctrl.description = role?.description ?? '';
+        $ctrl.role = role?.role;
+        $ctrl.description = role?.description;
         $ctrl.descriptionError = $ctrl.roleError = false;
 
         $ctrl.titleMdlRegisterRole = role ? 'Editar Rol' : 'Registrar Rol';

@@ -69,7 +69,10 @@ export default function GroupController($scope, $http, PartiturasServices) {
         $ctrl.groupError = false;
 
         $ctrl.group = group;
-        $ctrl.nameGroup = group?.nombre ?? '';
+
+        $('form[name="formRegisterGroup"]').trigger('reset');
+
+        $ctrl.nameGroup = group?.nombre;
 
         $ctrl.titleMdlRegisterGroup = group ? 'Modificar' : 'Registrar';
 
