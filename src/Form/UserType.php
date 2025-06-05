@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +19,7 @@ class UserType extends AbstractType
             'oncut' => 'return false;',
             'oncontextmenu' => 'return false;',
             'maxlength' => 30,
-//            'oninput' => "this.value = this.value.replace(/\s+/g, '');",
+            'oninput' => "this.value = this.value.replace(/\s+/g, '');",
             'style' => 'background-image : none',
         ];
 
@@ -30,14 +29,15 @@ class UserType extends AbstractType
                 'attr' => [
                     'ng-change' => 'ctrl.validateFields()',
                     'ng-model' => 'ctrl.nameUser',
-                    'ng-class' => "{'is-invalid' : ctrl.nameUserError}"
+                    'ng-class' => "{'is-invalid' : ctrl.nameUserError}",
+                    'style' => 'text-transform : uppercase',
                 ]
             ])
             ->add('email', TextType::class, [
                 'label' => false,
                 'attr' => [
                     'ng-model' => 'ctrl.email',
-//                    'oninput' => "this.value = this.value.replace(/\s+/g, '');",
+                    'oninput' => "this.value = this.value.replace(/\s+/g, '');",
                     'ng-change' => 'ctrl.validateEmail(); ctrl.validateFields()',
                     'ng-class' => "{'is-invalid' : !ctrl.validEmail || ctrl.emailError}"
                 ]
@@ -46,7 +46,7 @@ class UserType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'ng-model' => 'ctrl.username',
-//                    'oninput' => "this.value = this.value.replace(/\s+/g, '');",
+                    'oninput' => "this.value = this.value.replace(/\s+/g, '');",
                     'ng-change' => 'ctrl.validateUsername(); ctrl.validateFields()',
                     'ng-class' => "{'is-invalid' : !ctrl.validUsername || ctrl.usernameError}"
                 ]
@@ -80,5 +80,4 @@ class UserType extends AbstractType
             ]
         ]);
     }
-
 }

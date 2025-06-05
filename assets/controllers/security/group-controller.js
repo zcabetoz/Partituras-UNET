@@ -70,18 +70,15 @@ export default function GroupController($scope, $http, PartiturasServices) {
 
         $ctrl.group = group;
 
-        $('form[name="formRegisterGroup"]').trigger('reset');
-
-        $ctrl.nameGroup = group?.nombre;
+        $ctrl.nameGroup = group?.nombre ?? '';
 
         $ctrl.titleMdlRegisterGroup = group ? 'Modificar' : 'Registrar';
 
         mdlRegisterGroup.modal('show');
 
-        mdlRegisterGroup.on('shown.bs.modal', function () {
-            $scope.formRegisterGroup.$setPristine();
-            $scope.formRegisterGroup.$setUntouched();
+        mdlRegisterGroup.off('shown.bs.modal');
 
+        mdlRegisterGroup.on('shown.bs.modal', function () {
             PartiturasServices.elementFocus('user_group_name');
         });
     }

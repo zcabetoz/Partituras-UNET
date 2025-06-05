@@ -66,6 +66,8 @@ export default function UserController($scope, $http, PartiturasServices) {
 
             mdlRegisteUser.modal('show');
 
+            mdlRegisteUser.off('shown.bs.modal');
+
             mdlRegisteUser.on('shown.bs.modal', () => {
                 $scope.formRegisterUser.$setPristine();
                 $scope.formRegisterUser.$setUntouched();
@@ -77,8 +79,7 @@ export default function UserController($scope, $http, PartiturasServices) {
         $ctrl.registerUser = ($event) => {
             $event.preventDefault();
             if ($scope.formRegisterUser.$valid && $ctrl.validPassword && $ctrl.validEmail && $ctrl.validUsername && $ctrl.samePasswords) {
-                console.log('->')
-                // $ctrl.isAuth2Fa() ? $ctrl.changePasswordWithAuth2Fa() : $ctrl.changePassword();
+                $ctrl.saveUser();
             } else {
                 const requiredErrors = $scope.formRegisterUser.$error['required'];
 
@@ -138,5 +139,25 @@ export default function UserController($scope, $http, PartiturasServices) {
             $ctrl.validUsername = $ctrl.validEmail = $ctrl.validPassword = true;
             $ctrl.nameUserError = $ctrl.emailError = $ctrl.usernameError = $ctrl.passwordError = $ctrl.passwordConfirmError = false;
         };
+
+        $ctrl.saveUser = (user = null) => {
+            $ctrl.saveUserLoading = true;
+
+            let url = Routing.generate('user_register');
+
+            let data = {
+                'name': $ctrl.nameUser.toUpperCase(),
+                'email': $ctrl.email,
+                'username': $ctrl.username,
+                'password': $ctrl.password,
+                'id': user?.id ?? null,
+            }
+
+            $http.post(url, data).then(({data}) => {
+                $ctrl.saveUserLoading = false;
+                PartiturasServices.toasterMessageService(data.message, data.status)
+                console.log(data);
+            })
+        }
     }
 }

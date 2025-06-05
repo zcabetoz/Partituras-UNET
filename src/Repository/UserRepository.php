@@ -18,7 +18,7 @@ class UserRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder();
 
-        $qb->addOr($qb->expr()->field('username')->equals(new Regex('.*' . $search . '.*i')));
+        $qb->addOr($qb->expr()->field('username')->equals(new Regex('.*' . $search . '.*', 'i')));
 
         $qb2 = clone $qb;
         $count = $qb2->count()->getQuery()->execute();
@@ -35,11 +35,9 @@ class UserRepository extends DocumentRepository
 
         $qb->sort('nombre', 'ASC');
 
-
         $response['count'] = $count;
         $response['data'] = $qb->getQuery()->execute();
 
         return $response;
     }
-
 }

@@ -93,11 +93,10 @@ class UserRoleController extends AbstractController
         $get = json_decode($request->getContent(), true);
         $role = $get['id'] ? $this->dm->getRepository(UserRole::class)->find($get['id']) : new UserRole();
 
-        if (!$get['id']) {
-            $isRole = $this->dm->getRepository(UserRole::class)->findOneBy(['role' => $get['role']]);
-            if ($isRole) {
-                return new JsonResponse(['message' => 'Ya existe un rol con este nombre', 'status' => 'error']);
-            }
+        $isRole = $this->dm->getRepository(UserRole::class)->findOneBy(['role' => $get['role']]);
+
+        if ($isRole  && ($isRole->getId() !== ($get['id'] ?? null))) {
+            return new JsonResponse(['message' => 'Ya existe un rol con este nombre', 'status' => 'error']);
         }
 
         $role->setRole($get['role']);

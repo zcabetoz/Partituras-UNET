@@ -76,11 +76,10 @@ class UserGroupController extends AbstractController
         $get = json_decode($request->getContent(), true);
         $group = $get['id'] ? $this->dm->getRepository(UserGroup::class)->find($get['id']) : new UserGroup('');
 
-        if (!$get['id']) {
-            $isGroup = $this->dm->getRepository(UserGroup::class)->findOneBy(['name' => $get['nameGroup']]);
-            if ($isGroup) {
-                return new JsonResponse(['message' => 'Ya existe un rol con este nombre', 'status' => 'error']);
-            }
+        $isGroup = $this->dm->getRepository(UserGroup::class)->findOneBy(['name' => $get['nameGroup']]);
+
+        if ($isGroup && ($isGroup->getId() !== ($get['id'] ?? null))) {
+            return new JsonResponse(['message' => 'Ya existe un Grupo con este nombre', 'status' => 'error']);
         }
 
         $group->setName($get['nameGroup']);

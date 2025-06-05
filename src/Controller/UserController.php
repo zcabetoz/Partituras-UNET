@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Document\User;
 use App\Form\UserType;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\LockException;
+use Doctrine\ODM\MongoDB\Mapping\MappingException;
+use Nucleos\UserBundle\Model\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +18,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class UserController extends AbstractController
 {
     private DocumentManager $dm;
+    private UserManager $userManager;
 
-    public function __construct(DocumentManager $dm)
+    public function __construct(DocumentManager $dm, UserManager $userManager)
     {
         $this->dm = $dm;
+        $this->userManager = $userManager;
     }
 
     #[Route('/list', name: 'user_list', methods: ['GET'])]
@@ -55,5 +60,44 @@ final class UserController extends AbstractController
         $response->setEncodingOptions(JSON_PRETTY_PRINT);
 
         return $response;
+    }
+
+    /**
+     * @throws MappingException|LockException
+     */
+    #[Route('/register/user', name: 'user_register', options: ['expose' => true], methods: ['POST'])]
+    public function userRegisterAction(Request $request): Response
+    {
+        $get = json_decode($request->getContent(), true);
+        $id = $get['id'];
+
+        if (!$id) {
+            $isUserInUse = $this->userManager->findUserByUsername($get['username']);
+            $isEmailInUse = $this->userManager->findUserByEmail($get['email']);
+
+            if ($isUserInUse || $isEmailInUse) {
+                return new JsonResponse([
+                    'message' => 'El ' . ($isUserInUse ? 'nombre de usuario' : 'correo electrónico') . ' ya se encuentra registrado',
+                    'status' => 'error'
+                ]);
+            }
+        }
+
+
+        /** @var User $user */
+        $user = $id ? $this->dm->getRepository(User::class)->find($id) : new User();
+
+        $user->setNombre($get['name']);
+        $user->setEmail($get['email']);
+        $user->setPlainPassword($get['password']);
+        $user->setEnabled(true);
+
+        if (!$id) {
+            $user->setUsername($get['username']);
+        }
+
+        $this->userManager->updateUser($user);
+
+        return new JsonResponse(['message' => 'Usuario registrado con éxito', 'status' => 'success']);
     }
 }
