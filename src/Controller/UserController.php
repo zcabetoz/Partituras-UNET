@@ -7,12 +7,14 @@ use App\Form\UserType;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Nucleos\UserBundle\Model\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Throwable;
 
 #[Route('/user')]
 final class UserController extends AbstractController
@@ -99,5 +101,21 @@ final class UserController extends AbstractController
         $this->userManager->updateUser($user);
 
         return new JsonResponse(['message' => 'Usuario registrado con éxito', 'status' => 'success']);
+    }
+
+    /**
+     * @throws MappingException|MongoDBException|LockException|Throwable
+     */
+    #[Route('/delete/user', name: 'user_delete', options: ['expose' => true], methods: ['DELETE'])]
+    public function userDeleteAction(Request $request): Response
+    {
+        $get = json_decode($request->getContent(), true);
+
+        $user = $this->dm->getRepository(User::class)->find($get['id']);
+
+        $this->dm->remove($user);
+        $this->dm->flush();
+
+        return new JsonResponse(['message' => 'Usuario eliminado con éxito', 'status' => 'success']);
     }
 }

@@ -7,11 +7,10 @@
 {% endblock %}
 
 {% block body %}
+    <toaster-container
+            toaster-options="{ 'position-class': 'toast-top-custom', 'newest-on-top':false }">
+    </toaster-container>
     <div class="row" ng-controller="UsuarioController as ctrl" ng-class="{'position-relative' : !ctrl.isLoading}">
-        <toaster-container
-                toaster-options="{ 'position-class': 'ctrl.toastPositionClass', 'newest-on-top':false }">
-        </toaster-container>
-
         <div class="col-md-3">
             <div class="box">
                 <div class="box-header with-border">
@@ -73,7 +72,7 @@
                                     </button>
 
                                     <button class="btn btn-sm btn-default text-danger" title="Eliminar del usuario"
-                                            ng-click="ctrl.openMdlDeleteRole(role)">
+                                            ng-click="ctrl.openMdlDeleteUser(user)">
                                         <i class="bi bi-trash3"></i>
                                     </button>
                                 </div>
@@ -105,5 +104,6 @@
         </div>
 
         {% include 'user/mdl.register.user.html.twig' %}
+        {% include 'user/mdl.delete.user.html.twig' %}
     </div>
 {% endblock %}

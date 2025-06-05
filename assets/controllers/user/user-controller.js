@@ -156,8 +156,36 @@ export default function UserController($scope, $http, PartiturasServices) {
             $http.post(url, data).then(({data}) => {
                 $ctrl.saveUserLoading = false;
                 PartiturasServices.toasterMessageService(data.message, data.status)
-                console.log(data);
+
+                if (data.status === 'error') {
+                    $ctrl.roleError = true;
+                    PartiturasServices.elementFocus('user_name');
+                } else {
+                    angular.element('#mdl-register-user').modal('hide');
+                    $ctrl.getUsers();
+                }
             })
+        }
+
+        $ctrl.openMdlDeleteUser = (user) => {
+            $ctrl.username = user.username;
+            $ctrl.email = user.email;
+            $ctrl.nameUser = user.name;
+            $ctrl.idUserDelete = user.id;
+            angular.element('#mdl-delete-user').modal('show');
+        }
+
+        $ctrl.deleteUser = function () {
+            $ctrl.isLoadingModalDeleteUser = true;
+            let url = Routing.generate('user_delete');
+
+            $http.delete(url, {data: {id: $ctrl.idUserDelete}}).then(({data}) =>{
+                $ctrl.isLoadingModalDeleteUser = false;
+
+                angular.element('#mdl-delete-user').modal('hide');
+                PartiturasServices.toasterMessageService(data.message, data.status);
+                $ctrl.getUsers();
+            });
         }
     }
 }

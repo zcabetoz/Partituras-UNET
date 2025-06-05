@@ -97,13 +97,14 @@ export default function RoleController($scope, $http, PartiturasServices) {
             $http.post(url, data).then(function (response) {
                 response = response.data;
                 $ctrl.isLoadingModal = false;
+
+                PartiturasServices.toasterMessageService(response.message, response.status);
+
                 if (response.status === 'error') {
-                    PartiturasServices.toasterMessageService(response.message, response.status);
                     $ctrl.roleError = true;
                     PartiturasServices.elementFocus('user_role_role');
                 } else {
                     angular.element('#mdl-register-role').modal('hide');
-                    PartiturasServices.toasterMessageService(response.message, response.status);
                     $ctrl.getRoles();
                 }
             });
