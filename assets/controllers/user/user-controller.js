@@ -1,13 +1,12 @@
 import Routing from 'fos-router';
 
-export default function UserController($scope, $http, PartiturasServices) {
+export default function UserController($scope, $http, PartiturasServices, $timeout) {
     let $ctrl = this;
 
     $ctrl.options = {};
     $ctrl.totalItems = 0;
     $ctrl.currentPage = 1;
     $ctrl.numItems = 15;
-
 
     $ctrl.setPage = (pageNo) => {
         $ctrl.currentPage = pageNo;
@@ -25,8 +24,9 @@ export default function UserController($scope, $http, PartiturasServices) {
     $ctrl.$onInit = () => {
         $ctrl.search = $ctrl.campoError = '';
         $ctrl.users = [];
+        $ctrl.userEdit = {};
         $ctrl.regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])\S{10,20}$/;
-        $ctrl.regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+        $ctrl.regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
         $ctrl.regexUsername = /^[a-z0-9]{5,20}$/;
 
         PartiturasServices.elementFocus('search');
@@ -179,13 +179,42 @@ export default function UserController($scope, $http, PartiturasServices) {
             $ctrl.isLoadingModalDeleteUser = true;
             let url = Routing.generate('user_delete');
 
-            $http.delete(url, {data: {id: $ctrl.idUserDelete}}).then(({data}) =>{
+            $http.delete(url, {data: {id: $ctrl.idUserDelete}}).then(({data}) => {
                 $ctrl.isLoadingModalDeleteUser = false;
 
                 angular.element('#mdl-delete-user').modal('hide');
                 PartiturasServices.toasterMessageService(data.message, data.status);
                 $ctrl.getUsers();
             });
+        }
+
+        $ctrl.openMdlEditUser = (user) => {
+            $ctrl.groups = [];
+            $ctrl.editPassword = false;
+            $ctrl.isLoadingGroups = true;
+
+            const url = Routing.generate('security_list_groups_tbl')
+            const mdlEditUser = angular.element('#mdl-edit-user');
+
+            $http.get(url).then(({data}) => {
+                $ctrl.groups = data
+            })
+
+            mdlEditUser.modal('show');
+
+            $ctrl.userEdit.name = user.name;
+
+            mdlEditUser.off('shown.bs.modal');
+
+            mdlEditUser.on('shown.bs.modal', () => {
+                PartiturasServices.elementFocus('user_edit_name');
+            });
+        }
+
+        $ctrl.focusMdlEditUser = () => {
+            $timeout(() => {
+                PartiturasServices.elementFocus($ctrl.editPassword ? 'user_edit_password' : 'user_edit_name');
+            })
         }
     }
 }

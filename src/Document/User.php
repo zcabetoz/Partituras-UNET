@@ -3,16 +3,16 @@
 namespace App\Document;
 
 use App\Repository\UserRepository;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Nucleos\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ODM\Document(repositoryClass: UserRepository::class)]
+#[MongoDB\Document(repositoryClass: UserRepository::class)]
 #[MongoDBUnique(fields: ['username'])]
 class User extends BaseUser
 {
-    #[ODM\Id(strategy: 'auto')]
+    #[MongoDB\Id(strategy: 'auto')]
     protected string $id;
 
     #[Assert\NotBlank(message: 'La contraseña es obligatoria')]
@@ -28,16 +28,16 @@ class User extends BaseUser
     )]
     protected ?string $plainPassword;
 
-    #[ODM\Field(type: 'string')]
-    protected ?string $nombre=null;
+    #[MongoDB\Field(type: 'string')]
+    protected ?string $nombre = null;
 
-    #[ODM\Field(type: 'string')]
+    #[MongoDB\Field(type: 'string')]
     protected string $shema_version;
 
-    #[ODM\Field(type: 'string')]
+    #[MongoDB\Field(type: 'string')]
     protected ?string $email;
 
-    #[ODM\Field(type: 'int')]
+    #[MongoDB\Field(type: 'int')]
     protected int $loginFail = 0;
 
     public function __construct()

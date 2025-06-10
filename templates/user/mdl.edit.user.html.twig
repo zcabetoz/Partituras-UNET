@@ -1,0 +1,67 @@
+<div class="modal fade" id="mdl-edit-user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content position-relative">
+            {{ form_start(formEditUser, {'attr': {'autocomplete': 'off'}}) }}
+
+            <div class="box text-decoration-none m-0 border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-user-edit me-2"></i> Editar Usuario
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h6 class="mb-3">Nombre</h6>
+                    {{ form_row(formEditUser.name) }}
+
+                    <div class="form-check form-switch my-3 fs-5 mt-4">
+                        <input class="form-check-input" type="checkbox" role="switch" style="cursor: pointer"
+                               id="flexSwitchCheckDefault"
+                               ng-model="ctrl.editPassword"
+                               ng-change="ctrl.focusMdlEditUser()"
+                        >
+                        <label class="form-check-label ms-2 text-muted" for="flexSwitchCheckDefault"
+                               style="cursor: pointer">
+                            Modificar Contraseña
+                        </label>
+                    </div>
+
+                    <div ng-if="ctrl.editPassword">
+                        <h6 class="mb-3">Nueva Contraseña</h6>
+                        {{ form_row(formEditUser.password) }}
+                        <h6 class="mb-3">Confirmar Contraseña</h6>
+                        {{ form_row(formEditUser.confirm_password) }}
+                    </div>
+
+                    <h6 class="mb-3 mt-4">Grupos</h6>
+                    <table id="tbl-groups" class="table table-hover table-striped table-sm">
+                        <thead>
+                        <tr ng-repeat="(key,group ) in ctrl.groups" class="align-middle">
+                            <td>{{ '{{ group.nombre }}' }}</td>
+                            <td class="text-end">
+                                <input class="input-check-roles-group input-check-lg" type="checkbox"
+                                       aria-label="" ng-model="group.check"
+                                       ng-click="$ctrl.checkGroupUser(group)">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.deleteUser()">
+                        <i class="fa-fw fa-regular fa-floppy-disk" style="margin-right: 5px"></i>Guardar
+                    </button>
+                </div>
+
+                <div class="overlay" ng-if="ctrl.saveUserLoading">
+                    <i class="fa fa-spinner fa-spin fa-2x text-primary"></i>
+                </div>
+
+            </div>
+            {{ form_end(formEditUser) }}
+        </div>
+    </div>
+</div>

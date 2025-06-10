@@ -1,11 +1,10 @@
 security:
-  enable_authenticator_manager: true
   password_hashers:
     Nucleos\UserBundle\Model\UserInterface: auto
 
   role_hierarchy:
     ROLE_ADMIN: ROLE_USER
-    ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_USER]
+    ROLE_SUPER_ADMIN: ROLE_ADMIN
 
   providers:
     nucleos_userbundle:

@@ -1,8 +1,10 @@
 # config/packages/nucleos_user.yaml
 nucleos_user:
-  db_driver: mongodb # other valid values is 'mongodb'
+  db_driver: mongodb
   firewall_name: main
   user_class: App\Document\User
-  from_email: "dann"
+  group:
+    group_class: App\Document\UserGroup
+  from_email: "noreply@tudominio.com"
   loggedin:
-    route: 'homepage' # Redirect route after login
+    route: 'homepage'

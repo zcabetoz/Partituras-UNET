@@ -58,16 +58,13 @@
                             <td>{{ '{{ user.name }}' }}</td>
                             <td class="text-end">
                                 <div class="btn-group">
-                                    <button class="btn btn-sm btn-default" title="Asignar grupo de roles a usuario"
-                                            ng-click="ctrl.openMdlAssignRole(user)">
-                                        Asignar Grupo
-                                    </button>
-
                                     <button class="btn btn-sm btn-default" title="Detalle del usuario">
                                         <i class="bi bi-info-square"></i>
                                     </button>
 
-                                    <button class="btn btn-sm btn-default" title="Editar del usuario">
+                                    <button class="btn btn-sm btn-default" title="Editar del usuario"
+                                            ng-click="ctrl.openMdlEditUser(user)"
+                                    >
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
 
@@ -105,5 +102,6 @@
 
         {% include 'user/mdl.register.user.html.twig' %}
         {% include 'user/mdl.delete.user.html.twig' %}
+        {% include 'user/mdl.edit.user.html.twig' %}
     </div>
 {% endblock %}

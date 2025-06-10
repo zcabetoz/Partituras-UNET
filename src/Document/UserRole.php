@@ -5,7 +5,7 @@ namespace App\Document;
 use App\Repository\UserRoleRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-#[MongoDB\Document(collection: 'user_role', repositoryClass: UserRoleRepository::class)]
+#[MongoDB\Document(collection: 'UserRole', repositoryClass: UserRoleRepository::class)]
 class UserRole
 {
     #[MongoDB\Id(strategy: 'auto')]

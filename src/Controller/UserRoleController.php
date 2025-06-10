@@ -70,7 +70,7 @@ class UserRoleController extends AbstractController
         $get = json_decode($request->getContent(), true);
         $role = $this->dm->getRepository(UserRole::class)->find($get['id']);
 
-        $groupsContainRole = $this->dm->getRepository(UserGroup::class)->findGroupByRole($role->getRole());
+        $groupsContainRole = $this->dm->getRepository(UserGroup::class)->findBy(['roles' => $role->getRole()]);
 
         foreach ($groupsContainRole as $group) {
             $group->removeRole($role->getRole());
@@ -95,7 +95,7 @@ class UserRoleController extends AbstractController
 
         $isRole = $this->dm->getRepository(UserRole::class)->findOneBy(['role' => $get['role']]);
 
-        if ($isRole  && ($isRole->getId() !== ($get['id'] ?? null))) {
+        if ($isRole && ($isRole->getId() !== ($get['id'] ?? null))) {
             return new JsonResponse(['message' => 'Ya existe un rol con este nombre', 'status' => 'error']);
         }
 

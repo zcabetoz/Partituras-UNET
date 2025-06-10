@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Document\User;
+use App\Document\UserGroup;
+use App\Form\UserEditType;
 use App\Form\UserType;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException;
@@ -31,10 +33,14 @@ final class UserController extends AbstractController
     #[Route('/list', name: 'user_list', methods: ['GET'])]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN_LISTAR_USUARIOS');
+
         $form = $this->createForm(UserType::class);
+        $formEditUser = $this->createForm(UserEditType::class);
 
         return $this->render('user/user.list.html.twig', [
             'form' => $form->createView(),
+            'formEditUser' => $formEditUser->createView()
         ]);
     }
 
