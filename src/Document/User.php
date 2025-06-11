@@ -3,14 +3,17 @@
 namespace App\Document;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Nucleos\UserBundle\Model\User as BaseUser;
+use Serializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[MongoDB\Document(repositoryClass: UserRepository::class)]
 #[MongoDBUnique(fields: ['username'])]
-class User extends BaseUser
+class User extends BaseUser implements Serializable
 {
     #[MongoDB\Id(strategy: 'auto')]
     protected string $id;
@@ -32,17 +35,18 @@ class User extends BaseUser
     protected ?string $nombre = null;
 
     #[MongoDB\Field(type: 'string')]
-    protected string $shema_version;
-
-    #[MongoDB\Field(type: 'string')]
     protected ?string $email;
 
     #[MongoDB\Field(type: 'int')]
     protected int $loginFail = 0;
 
+    #[MongoDB\ReferenceMany(targetDocument: UserGroup::class)]
+    protected Collection $groups;
+
     public function __construct()
     {
         parent::__construct();
+        $this->groups = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -65,16 +69,6 @@ class User extends BaseUser
         $this->nombre = $nombre;
     }
 
-    public function getShemaVersion(): ?string
-    {
-        return $this->shema_version;
-    }
-
-    public function setShemaVersion(?string $shema_version): void
-    {
-        $this->shema_version = $shema_version;
-    }
-
     public function setEmail(?string $email): void
     {
         $this->email = $email;
@@ -93,5 +87,35 @@ class User extends BaseUser
     public function incLoginFail(): void
     {
         $this->loginFail++;
+    }
+
+    public function serialize(): string
+    {
+        return serialize($this->__serialize());
+    }
+
+    public function unserialize(string $data): void
+    {
+        $this->__unserialize(unserialize($data, ['allowed_classes' => false]));
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'id'       => $this->id,
+            'username' => $this->username,
+            'email'    => $this->email,
+            'password' => $this->password,
+            'enabled'  => $this->enabled,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->id       = $data['id'];
+        $this->username = $data['username'];
+        $this->email    = $data['email'];
+        $this->password = $data['password'];
+        $this->enabled  = $data['enabled'];
     }
 }
