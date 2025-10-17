@@ -2,7 +2,7 @@
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content position-relative">
-            {{ form_start(formEditUser, {'attr': {'autocomplete': 'off'}}) }}
+            {{ form_start(formEditUser, {'name' : 'formEditUser', 'attr': {'autocomplete': 'off', 'novalidate':'novalidate'}}) }}
 
             <div class="box text-decoration-none m-0 border-0">
                 <div class="modal-header">
@@ -51,7 +51,7 @@
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.deleteUser()">
+                    <button type="submit" class="btn btn-primary btn-sm">
                         <i class="fa-fw fa-regular fa-floppy-disk" style="margin-right: 5px"></i>Guardar
                     </button>
                 </div>

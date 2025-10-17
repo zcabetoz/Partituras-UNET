@@ -121,7 +121,7 @@ export default function RoleController($scope, $http, PartiturasServices) {
     }
 
     $ctrl.validateFields = function () {
-        $ctrl.roleError = PartiturasServices.hasError($scope.formRegisterRole, 'user_role[role]', $ctrl.campoError);
-        $ctrl.descriptionError = PartiturasServices.hasError($scope.formRegisterRole, 'user_role[description]', $ctrl.campoError);
+        $ctrl.roleError = PartiturasServices.hasErrorService($scope.formRegisterRole, 'user_role[role]', $ctrl.campoError);
+        $ctrl.descriptionError = PartiturasServices.hasErrorService($scope.formRegisterRole, 'user_role[description]', $ctrl.campoError);
     };
 }

@@ -134,7 +134,7 @@ export default function GroupController($scope, $http, PartiturasServices) {
     }
 
     $ctrl.validateFields = function () {
-        $ctrl.groupError = PartiturasServices.hasError($scope.formRegisterGroup, 'user_group[name]', $ctrl.campoError);
+        $ctrl.groupError = PartiturasServices.hasErrorService($scope.formRegisterGroup, 'user_group[name]', $ctrl.campoError);
     };
 
     $ctrl.checkRoleGroup = function (idRole, view = false) {

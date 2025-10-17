@@ -46,7 +46,7 @@ class UserEditType extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => [
-                'ng-submit' => 'submitFormEdit($event)',
+                'ng-submit' => 'ctrl.submitFormEdit($event)',
             ]
         ]);
     }

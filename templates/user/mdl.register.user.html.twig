@@ -22,7 +22,7 @@
                                 <label for="user_email" class="form-label">Email</label>
                                 {{ form_row(form.email) }}
 
-                                <label for="username" class="form-label">Nombre de usuario</label>
+                                <label for="user_username" class="form-label">Nombre de usuario</label>
                                 {{ form_row(form.username) }}
 
                                 <div class="position-relative has-feedback mb-3">
@@ -35,7 +35,7 @@
                                 </div>
 
                                 <div class="position-relative has-feedback mb-3">
-                                    <label for="password_confirm" class="form-label">Confirmar Contraseña</label>
+                                    <label for="user_password_confirm" class="form-label">Confirmar Contraseña</label>
                                     {{ form_row(form.password_confirm) }}
                                     <i class="fa form-control-feedback " style="top: 32px; right: 5px"
                                        ng-class="{'fa-eye': ctrl.showPassword['passwordConfirm'], 'fa-eye-slash': !ctrl.showPassword['passwordConfirm']}"

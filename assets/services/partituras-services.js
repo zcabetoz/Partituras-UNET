@@ -23,10 +23,25 @@ angular.module('partituras.services', ['ngAnimate', 'toaster'])
             }, 50);
         }
 
-        $ctrl.hasError = function (form, fieldName, campoError, extraCondition = false) {
+        $ctrl.hasErrorService = function (form, fieldName, campoError, extraCondition = false) {
             let field = form[fieldName];
-            return field.$invalid && field.$dirty || campoError === fieldName && field.$invalid || extraCondition;
+            return field.$invalid && field.$dirty || campoError === fieldName && field.$invalid;
         };
+
+        $ctrl.validarCamposFormService = (form, fields) => {
+            let arrayErrorFields = form.$error['required'];
+
+            if (arrayErrorFields) {
+                for (let fieldName of fields) {
+                    let item = arrayErrorFields.find(item => item.$name === fieldName);
+                    if (item) {
+                        return item;
+                    }
+                }
+            }
+
+            return null;
+        }
     })
     .run(function ($timeout) {
         $(document).on('hide.bs.modal', function (e) {

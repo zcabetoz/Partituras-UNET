@@ -27,7 +27,7 @@ class UserType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'ng-change' => 'ctrl.validateFields()',
+                    'ng-change' => 'ctrl.validateFieldsForm("nameUserError","user[name]")',
                     'ng-model' => 'ctrl.nameUser',
                     'ng-class' => "{'is-invalid' : ctrl.nameUserError}",
                     'style' => 'text-transform : uppercase',
@@ -38,7 +38,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'ng-model' => 'ctrl.email',
                     'oninput' => "this.value = this.value.replace(/\s+/g, '');",
-                    'ng-change' => 'ctrl.validateEmail(); ctrl.validateFields()',
+                    'ng-change' => 'ctrl.validateEmail(); ctrl.validateFieldsForm("emailError","user[email]")',
                     'ng-class' => "{'is-invalid' : !ctrl.validEmail || ctrl.emailError}"
                 ]
             ])
@@ -47,7 +47,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'ng-model' => 'ctrl.username',
                     'oninput' => "this.value = this.value.replace(/\s+/g, '');",
-                    'ng-change' => 'ctrl.validateUsername(); ctrl.validateFields()',
+                    'ng-change' => 'ctrl.validateUsername(); ctrl.validateFieldsForm("usernameError","user[username]")',
                     'ng-class' => "{'is-invalid' : !ctrl.validUsername || ctrl.usernameError}"
                 ]
             ])
@@ -55,7 +55,7 @@ class UserType extends AbstractType
                 'label' => false,
                 'attr' => array_merge($commonAttr, [
                     'ng-model' => 'ctrl.password',
-                    'ng-change' => 'ctrl.validatePassword(); ctrl.validateSamePasswords(); ctrl.validateFields()',
+                    'ng-change' => 'ctrl.validatePassword(); ctrl.validateSamePasswords(); ctrl.validateFieldsForm("passwordError","user[password]")',
                     'ng-attr-type' => "{{ ctrl.showPassword['password'] ? 'text' : 'password' }}",
                     'ng-class' => "{'is-invalid' : ctrl.passwordError || !ctrl.validPassword }",
                 ])
@@ -64,9 +64,9 @@ class UserType extends AbstractType
                 'label' => false,
                 'attr' => array_merge($commonAttr, [
                     'ng-model' => 'ctrl.passwordConfirm',
-                    'ng-change' => 'ctrl.validateSamePasswords(); ctrl.validateFields()',
+                    'ng-change' => 'ctrl.validateSamePasswords(); ctrl.validateFieldsForm("passwordConfirmError","user[password_confirm]")',
                     'ng-attr-type' => "{{ ctrl.showPassword['passwordConfirm'] ? 'text' : 'password' }}",
-                    'ng-class' => "{'is-invalid' : ctrl.passwordConfirmError}",
+                    'ng-class' => "{'is-invalid' :  ctrl.passwordConfirmError }",
                 ])
             ]);
 

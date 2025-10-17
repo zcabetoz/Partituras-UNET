@@ -2,6 +2,7 @@ import Routing from 'fos-router';
 
 export default function UserController($scope, $http, PartiturasServices, $timeout) {
     let $ctrl = this;
+    let form;
 
     $ctrl.options = {};
     $ctrl.totalItems = 0;
@@ -55,8 +56,6 @@ export default function UserController($scope, $http, PartiturasServices, $timeo
         $ctrl.openMdlRegisterUser = () => {
             const mdlRegisteUser = angular.element('#mdl-register-user');
 
-            $('form[name="formRegisterUser"]').trigger('reset');
-
             $ctrl.showPassword = {
                 password: false,
                 passwordConfirm: false,
@@ -72,25 +71,30 @@ export default function UserController($scope, $http, PartiturasServices, $timeo
                 $scope.formRegisterUser.$setPristine();
                 $scope.formRegisterUser.$setUntouched();
                 PartiturasServices.elementFocus('user_name');
+                form = $scope.formRegisterUser;
             })
-
         }
 
         $ctrl.registerUser = ($event) => {
             $event.preventDefault();
-            if ($scope.formRegisterUser.$valid && $ctrl.validPassword && $ctrl.validEmail && $ctrl.validUsername && $ctrl.samePasswords) {
+            if (form.$valid && $ctrl.validPassword && $ctrl.validEmail && $ctrl.validUsername && $ctrl.samePasswords) {
                 $ctrl.saveUser();
             } else {
-                const requiredErrors = $scope.formRegisterUser.$error['required'];
+                let fieldsUserForm = ['user[name]', 'user[email]', 'user[username]', 'user[password]', 'user[password_confirm]'];
 
-                if (requiredErrors && requiredErrors.length > 0) {
-                    const invalidField = requiredErrors[0];
+                $ctrl.campoError = PartiturasServices.validarCamposFormService(form, fieldsUserForm);
 
-                    $ctrl.campoError = invalidField.$name;
+                if ($ctrl.campoError) {
+                    let fieldMap = [
+                        ['nameUserError', 'user[name]'],
+                        ['emailError', 'user[email]'],
+                        ['usernameError', 'user[username]'],
+                        ['passwordError', 'user[password]'],
+                        ['passwordConfirmError', 'user[password_confirm]']
+                    ];
 
-                    $ctrl.validateFields();
-
-                    PartiturasServices.elementFocus(invalidField.$$element?.attr('id'));
+                    $ctrl.validateFields(fieldMap);
+                    PartiturasServices.elementFocus($ctrl.campoError.$$attr.id)
                 } else {
                     if (!$ctrl.validEmail) {
                         PartiturasServices.elementFocus('user_email');
@@ -99,6 +103,10 @@ export default function UserController($scope, $http, PartiturasServices, $timeo
                     } else {
                         let idInput = !$ctrl.validPassword ? 'user_password' : 'user_password_confirm';
                         PartiturasServices.elementFocus(idInput);
+
+                        if (idInput === 'user_password_confirm')
+                            $ctrl.passwordConfirmError = true;
+
                     }
                 }
             }
@@ -124,15 +132,11 @@ export default function UserController($scope, $http, PartiturasServices, $timeo
             $ctrl.samePasswords = $ctrl.password === $ctrl.passwordConfirm;
         }
 
-        $ctrl.validateFields = () => {
-            const form = $scope.formRegisterUser;
-
-            $ctrl.nameUserError = PartiturasServices.hasError(form, 'user[name]', $ctrl.campoError);
-            $ctrl.emailError = PartiturasServices.hasError(form, 'user[email]', $ctrl.campoError);
-            $ctrl.usernameError = PartiturasServices.hasError(form, 'user[username]', $ctrl.campoError);
-            $ctrl.passwordError = PartiturasServices.hasError(form, 'user[password]', $ctrl.campoError);
-            $ctrl.passwordConfirmError = PartiturasServices.hasError(form, 'user[password_confirm]', $ctrl.campoError, !$ctrl.samePasswords && form['user[password_confirm]'].$dirty);
-        };
+        $ctrl.validateFieldsForm = (prop, field) => {
+            $ctrl[prop] = PartiturasServices.hasErrorService(form, field, $ctrl.campoError?.$name);
+            if (prop === 'passwordConfirmError')
+                $ctrl.passwordConfirmError = $ctrl.passwordConfirm !== $ctrl.password;
+        }
 
         $ctrl.resetFormState = () => {
             $ctrl.nameUser = $ctrl.email = $ctrl.username = $ctrl.password = $ctrl.passwordConfirm = '';
@@ -211,10 +215,21 @@ export default function UserController($scope, $http, PartiturasServices, $timeo
             });
         }
 
+        $ctrl.submitFormEdit = ($event) => {
+            $event.preventDefault();
+            console.log('editar')
+        }
+
         $ctrl.focusMdlEditUser = () => {
             $timeout(() => {
                 PartiturasServices.elementFocus($ctrl.editPassword ? 'user_edit_password' : 'user_edit_name');
             })
         }
+
+        $ctrl.validateFields = (fieldMap) => {
+            fieldMap.forEach(([prop, fieldName]) => {
+                $ctrl[prop] = PartiturasServices.hasErrorService(form, fieldName, $ctrl.campoError.$name);
+            });
+        };
     }
 }
